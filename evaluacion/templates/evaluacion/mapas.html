@@ -1,0 +1,125 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block head%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#mp2").addClass('active');
+    });
+</script>
+{% endblock %}
+
+{% block nav-tabs %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#ms2").addClass('active');
+    });
+</script>
+{% endblock %}
+
+
+{% block js %}
+
+
+<script type="text/javascript">
+
+   jQuery(function($) {
+    // Asynchronously Load the map API
+    var script = document.createElement('script');
+    script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+    document.body.appendChild(script);
+    });
+
+
+
+    var markers=[];
+    {% for puntos in lista_coordenadas %}
+    var w = parseFloat('{{ puntos.longitud }}'.replace(',','.'));
+    var n = parseFloat('{{ puntos.latitud }}'.replace(',','.'));
+    var nombre = '{{puntos.nombre}}'
+    var matricula = '{{puntos.matricula}}'
+
+    markers.push(
+    {
+    "title": nombre,
+    "lat": n,
+    "lng": w,
+    "matricula": matricula
+    }
+    );
+    {% endfor %}
+
+
+    window.onload = function () {
+        LoadMap();
+    }
+    function LoadMap() {
+
+        var latitud = parseFloat('{{ predio.latitud }}'.replace(',','.'));
+        var longitud = parseFloat('{{ predio.longitud }}'.replace(',','.'));
+        var mapOptions = {
+            //center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+
+            center: new google.maps.LatLng(latitud, longitud),
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+
+
+        <!--var ctaLayer = new google.maps.KmlLayer({-->
+        <!--url: 'http://200.21.216.243:8088/media/kml/municpios.kml',-->
+        <!--map: map-->
+        <!--});-->
+
+        //Create and open InfoWindow.
+        var infoWindow = new google.maps.InfoWindow();
+        //alert(markers.length);
+
+        for (var i = 0; i < markers.length; i++) {
+            var data = markers[i];
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+
+
+                title: data.title
+            });
+
+            //Attach click event to the marker.
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                    infoWindow.setContent("<div style = 'width:200px;min-height:50px'>" +  '<h4>' + data.title + '</h4>' + '<br>' + data.matricula + "</div>");
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+        }
+    }
+
+</script>
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+    {% include "evaluacion/titulo.html" %}
+    {% include "evaluacion/nav-bar.html" %}
+
+    <div class="panel">
+        <div id="dvMap" style="height:800px">
+            <div id="map_canvas" class="mapping" style="width:100%; height:100%"></div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

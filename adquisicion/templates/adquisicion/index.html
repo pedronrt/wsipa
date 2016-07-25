@@ -1,0 +1,95 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+
+{% block head%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#mp3").addClass('active');
+    });
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="text-center">Listado de Contratos de  Adquisición </h2>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h3 class="text-center">
+                <span class="label label-primary">Total de contratos registrados {{ page_obj.paginator.count }} </span>
+            </h3>
+            <div>
+                <form class="navbar-form navbar-right" role="search" action="" method="get" >
+                    <div class="form-group">
+                        <input type="text" name="q" class="form-control" placeholder="Numero Contrato">
+                    </div>
+                    <button type="submit"  class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </form>
+            </div>
+
+            {% if lista_contratos %}
+            <div class="col-md-12">
+                <table id="table_id" class="table table-hover table-bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">id </th>
+                            <th class="text-center">Contrato N°</th>
+                            <th class="text-center">Fecha del Contrato </th>
+                            <th class="text-center">Valor  </th>
+                            <th class="text-center">Predio </th>
+                            <th class="text-center">Detalle </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for obj in lista_contratos %}
+                        <tr class="text-center">
+                            <td>    {{ obj.id }} </td>
+                            <td>    {{ obj.numero_contrato }} </td>
+                            <td>    {{ obj.fecha_contrato }} </td>
+                            <td class="text-right">    {{ obj.valor_contrato|intcomma  }} </td>
+                            <td>    {{ obj.predio }} </td>
+                            <td class="text-center"> <a href="#"> <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> </a> </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="text-center">
+                    {% if is_paginated %}
+                        <ul class="pagination pagination-centered">
+                            {% if page_obj.has_previous %}
+                            <li><a href="?page=1"><<</a></li>
+                            <li><a href="?page={{ page_obj.previous_page_number }}"><</a></li>
+                            {% endif %}
+
+                            {% for i in paginator.page_range %}
+                            <li {% if page_obj.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li><a href="?page={{ page_obj.next_page_number }}">></a></li>
+                            <li><a href="?page={{ page_obj.paginator.num_pages }}">>></a></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-8 col-md-offset-2">
+                <div class="alert alert-danger" role="alert" align="center">
+                    <p> sin registros </p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

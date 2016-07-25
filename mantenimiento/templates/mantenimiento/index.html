@@ -1,0 +1,74 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+
+
+{% block head%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#mp4").addClass('active');
+    });
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<div class="jumbotron">
+    <h2 class="text-center">Listado de Contratos de Mantenimiento </h2>
+</div>
+
+
+
+{% if lista_contratos %}
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+      <table id="table_id" class="table table-hover table-bordered " width="100%">
+            <thead>
+            <tr>
+                <th>Id </th>
+                <th>Nombre</th>
+                <th>Vereda </th>
+                <th>Municipio </th>
+                <th>Matricula </th>
+                <th>Estado </th>
+                <th>Detalle </th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for predios in lista_predios %}
+            <tr>
+                <td>    {{ predios.id }} </td>
+                <td>    {{ predios.nombre }} </td>
+                <td>    {{ predios.vereda }} </td>
+                <td>    {{ predios.municipio }} </td>
+                <td>    {{ predios.matricula }} </td>
+                <td>    {{ predios.estado }} </td>
+                <td class="text-center"> <a href="{% url 'evaluacion:detalle' predios.id %}"> <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> </a> </td>
+
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="col-md-8 col-md-offset-2">
+    <div class="alert alert-danger" role="alert" align="center">
+        <p> sin registro de contratos de mantenimiento </p>
+    </div>
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+
+{% endblock %}

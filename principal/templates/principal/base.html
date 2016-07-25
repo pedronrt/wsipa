@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" /></link>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dataTablesbootstrap.css' %}" /></link>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}" /></link>
+
+
+    <script src="{% static 'jquery/jquery1-11-3.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}" ></script>
+    <script src="{% static 'bootstrap/js/npm.js' %}" ></script>
+
+    <script src="{% static 'jquery/dataTables.js' %}" ></script>
+    <script src="{% static 'jquery/dataTablesbootstrap.js' %}" ></script>
+    <script src="{% static 'jquery/chart.js' %}" ></script>
+
+    {% block head %}
+    {% endblock %}
+    {% block nav-tabs %}
+    {% endblock %}
+</head>
+
+<body>
+
+
+
+
+
+<nav class="navbar navbar-default navbar-static-top " >
+  <div class="container">
+    <div class="navbar-header">
+
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'principal:index' %}">
+          <img alt="Brand" src="{% static 'img/sipia20.png'%}">
+
+      </a>
+    </div>
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        {%  if user.is_authenticated %}
+        <ul class="nav navbar-nav navbar-right">
+
+            <li id="mp1"><a href="{% url 'principal:index' %}">Inicio</a></li>
+            <li id="mp2"><a href="{% url 'evaluacion:index' %}">Evaluación</a></li>
+            <li id="mp3"><a href="{% url 'adquisicion:index' %}">Adquisición</a></li>
+            <li id="mp4"><a href="{% url 'mantenimiento:index' %}">Mantenimiento</a></li>
+            <!--<li id="mp5"><a href="#">Reportes</a></li>-->
+             <a class="btn btn-default navbar-btn navbar-right " href="{% url 'logout' %}" role="button">Salir</a>
+
+        </ul>
+
+
+
+
+
+        {% else %}
+        <a class="btn btn-default navbar-btn navbar-right" href="{% url 'login' %}" role="button">Ingresar</a>
+        {% endif %}
+
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+<div>
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+
+<div class="footer"  >
+      <div class="container" align="center">
+          <h6><p>Gobernación de Arauca <br>
+          Calle 20 - Carrera 21 Esquina <br>
+          Teléfono: 57 7 8851719 | Fax: 8853233 <br>
+          Secretaría de Desarrollo Agropecuario y Sostenible<br>
+          </p></h6>
+      </div>
+</div>
+
+
+{% block js %}
+
+{% endblock  %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyY3_sUcLquTs5tYPQDVCu9uxWw0fNwoo&callback=initMap" async defer></script>
+
+</body>
+</html>

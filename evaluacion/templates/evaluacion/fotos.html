@@ -1,0 +1,66 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block head%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#mp2").addClass('active');
+    });
+</script>
+{% endblock %}
+
+{% block nav-tabs %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#ms3").addClass('active');
+    });
+</script>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    {% include "evaluacion/titulo.html" %}
+    {% include "evaluacion/nav-bar.html" %}
+
+
+<div class="panel panel-default">
+
+{% if lista_fotos %}
+
+
+    <div class="panel">
+        <div class ="row">
+            {% for foto in lista_fotos %}
+            <div class="col-xs-12 col-md-4">
+                <div class="thumbnail">
+                    <img src="{{ foto.imagen.url }}" class="img-responsive">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    {% else %}
+    <div class="panel">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" role="alert" align="center">
+                <p>Aun no se registran fotos </p>
+            </div>
+        </div>
+    </div>
+     </div>
+
+{%  endif %}
+
+</div>
+
+</div>
+
+{% endblock %}

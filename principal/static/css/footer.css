@@ -1,0 +1,15 @@
+.footer {
+  margin-top:00px;
+  height: 120px;
+  background-color: #777;
+}
+
+
+.footer p {
+
+  font-family: "Avenir LT W01 45 Light", Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: #FAFAFA;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}

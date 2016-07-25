@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+{% block nav-tabs %}
+{% endblock %}
+
+<ul class="nav nav-tabs">
+    <li id="ms1" role="presentation">
+      <a href="{% url 'evaluacion:detalle' predio.id %}">
+          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Detalle
+      </a>
+    </li>
+    <li id="ms2" role="presentation">
+        <a href="{% url 'evaluacion:mapas' predio.id %}">
+            <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Localización
+        </a>
+    </li>
+    <li id="ms3" role="presentation">
+        <a href="{% url 'evaluacion:fotos' predio.id %}">
+            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Registro Fotográfico
+        </a>
+    </li>
+
+</ul>

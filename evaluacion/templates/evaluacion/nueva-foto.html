@@ -1,0 +1,29 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block content %}
+
+<h1>Agregar Fotos</h1>
+
+<p>id{{ predio.id }}</p>
+
+{% if form.errors %}
+<p style="color: red ">
+Por favor corrige lo siguiente: </p>
+{% endif %}
+
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+    <div class="field">
+        {{ form.predio.errors }}
+        <label for="id_predio">predio:</label> {{ form.predio }}
+    </div>
+
+    <div class="field">
+        {{ form.imagen.errors }}
+        <label for="id_imagen">imagen:</label> {{ form.imagen }}
+    </div>
+    <input type="submit" value="Enviar"> </form>
+
+{% endblock %}

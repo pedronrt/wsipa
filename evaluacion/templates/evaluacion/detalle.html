@@ -1,0 +1,306 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block head%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#mp2").addClass('active');
+    });
+</script>
+{% endblock %}
+
+{% block nav-tabs %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#ms1").addClass('active');
+    });
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+
+    {% include "evaluacion/titulo.html" %}
+    {% include "evaluacion/nav-bar.html" %}
+
+
+<div class="panel panel-default">
+
+    <div class="page-header">
+        <h4><span class="label label-success">1. OFERTAS DE VENTA </span></h4>
+    </div>
+
+    {% if lista_ofertas %}
+
+    <table id="table_id_oferta" class="table table-hover table-bordered" width="100%">
+        <thead>
+        <tr>
+            <th>Fecha Oferta </th>
+            <th>Nombre</th>
+            <th>Primer Apellido </th>
+            <th>Segundo Apellido </th>
+            <th>Cedula </th>
+            <th>Municipio </th>
+            <th>Descargar </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for oferta in lista_ofertas %}
+        <tr class="text-center">
+            <td>    {{ oferta.fecha_oferta }} </td>
+            <td>    {{ oferta.nombres }} </td>
+            <td>    {{ oferta.apellido1 }} </td>
+            <td>    {{ oferta.apellido2 }} </td>
+            <td class="text-right">    {{ oferta.cedula|intcomma  }} </td>
+            <td>    {{ oferta.municipio }} </td>
+            {% if oferta.documento %}
+            <td class="text-center"> <a href="{{ oferta.documento.url }}" target="_blank"> <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> </a> </td>
+            {% else %}
+            <td class="text-center">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </td>
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" role="alert" align="center">
+                <p>Sin ofertas registradas</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+
+
+
+<div class="page-header">
+    <h4><span class="label label-success">2. TITULARIDAD DEL PREDIO</span></h4>
+</div>
+
+{% if lista_titularidad %}
+
+
+
+<table id="table_id_titularidad" class="table table-hover table-bordered" width="100%">
+    <thead>
+        <tr>
+
+            <th>Tipo Documento </th>
+            <th>Número </th>
+            <th>Fecha Documento</th>
+            <th>Fecha Matricula</th>
+            <th>Impedimento de Compra </th>
+            <th>Descargar </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for titularidad in lista_titularidad %}
+    <tr class="text-center">
+
+        <td>    {{ titularidad.tipo_documento }} </td>
+        <td>    {{ titularidad.numero }} </td>
+        <td>    {{ titularidad.fecha_documento }} </td>
+        <td>    {{ titularidad.fecha_matricula }} </td>
+        <td>    {{ titularidad.tipo_impedimento }} </td>
+        {% if titularidad.documento %}
+        <td class="text-center"> <a href=" {{ titularidad.documento.url }}" target="_blank"> <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> </a> </td>
+        {% else %}
+        <td class="text-center">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </td>
+        {% endif %}
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" role="alert" align="center">
+                <p>Sin informes registrados</p>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+
+
+
+
+<!--DETALLE CON LISTA DE TOPOGRAFIAS REALIZADAS-->
+
+<div class="page-header">
+    <h4><span class="label label-success">3. ESTUDIO TOPOGRAFIAS</span></h4>
+</div>
+
+{% if lista_topografias %}
+
+<table id="table_id_topografia" class="table table-hover table-bordered" width="100%">
+    <thead>
+        <tr>
+            <th>Fecha Topografía </th>
+            <th>Área Bosque (Ha)</th>
+            <th>Área Agricola (Ha)</th>
+            <th>Área Sabana (Ha)</th>
+            <th>Área Total (Ha)</th>
+            <th>Descargar</th>
+            <th>Plano</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for topografia in lista_topografias %}
+    <tr class="text-center">
+        <td>    {{ topografia.fecha_topografia }} </td>
+        <td>    {{ topografia.area_bosque|intcomma  }} </td>
+        <td>    {{ topografia.area_agricola|intcomma  }} </td>
+        <td>    {{ topografia.area_sabana|intcomma  }} </td>
+        <td>    {{ topografia.area_total|intcomma  }} </td>
+        {% if topografia.documento %}
+         <td class="text-center"> <a href=" {{ topografia.documento.url }}" target="_blank"> <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> </a> </td>
+        {% else %}
+        <td class="text-center">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </td>
+        {% endif %}
+        {% if topografia.plano %}
+        <td class="text-center"> <a href=" {{ topografia.plano.url }}" target="_blank"> <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> </a> </td>
+        {% else %}
+        <td class="text-center">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" role="alert" align="center">
+                <p>Sin topografias registradas</p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+
+
+
+
+<div class="page-header">
+    <h4><span class="label label-success">4. CARACTERIZACIÓN AMBIENTAL</span></h4>
+</div>
+
+{% if lista_caracterizaciones %}
+
+
+
+<table id="table_id_caracterizacion" class="table table-hover table-bordered" width="100%">
+    <thead>
+        <tr>
+            <th>Fecha Visita </th>
+            <th>Subzona Hidrográfica</th>
+            <th>Microcuenca </th>
+            <th>Acueducto Beneficiado </th>
+            <th>Descargar</th>
+
+        </tr>
+    </thead>
+    <tbody>
+    {% for caracterizacion in lista_caracterizaciones %}
+    <tr>
+        <td>    {{ caracterizacion.fecha_caracterizacion }} </td>
+        <td>    {{ caracterizacion.subzona }} </td>
+        <td>    {{ caracterizacion.microcuenca }} </td>
+        <td>    {{ caracterizacion.acueducto }} </td>
+        {% if caracterizacion.documento %}
+        <td class="text-center"> <a href=" {{ caracterizacion.documento.url }}" target="_blank"> <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> </a> </td>
+        {% else %}
+        <td class="text-center">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" role="alert" align="center">
+                <p>Sin informes registrados</p>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+
+<div class="page-header">
+    <h4><span class="label label-success">5. AVALUOS COMERCIALES </span></h4>
+</div>
+
+{% if lista_avaluos %}
+
+<table id="table_id_avaluos" class="table table-hover table-bordered" width="100%">
+    <thead>
+        <tr>
+            <th>Fecha </th>
+            <th>Valor Total</th>
+            <th>Valor Promedio (Ha)</th>
+            <th>Lonja Inmobiliaria </th>
+            <th>Descargar </th>
+
+        </tr>
+    </thead>
+    <tbody>
+    {% for avaluo in lista_avaluos %}
+    <tr class="text-center">
+        <td>    {{ avaluo.fecha_avaluo }} </td>
+        <td class="text-right">    {{ avaluo.valor_total|intcomma}} </td>
+        <td class="text-right">    {{ avaluo.valor_hectarea|intcomma }} </td>
+        <td>    {{ avaluo.lonja }} </td>
+        {% if avaluo.documento %}
+         <td class="text-center"> <a href=" {{ avaluo.documento.url }}" target="_blank"> <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span> </a> </td>
+        {% else %}
+        <td class="text-center">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </td>
+        {% endif %}
+
+
+
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" role="alert" align="center">
+                <p>Sin informes registrados</p>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+
+
+
+</div>
+
+
+</div>
+
+{% endblock %}

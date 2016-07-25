@@ -1,0 +1,71 @@
+{% extends "principal/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Sistema de Informacion Ambiental {% endblock %}
+
+{% block Breadcrumbs %}
+Inicio
+{% endblock  %}
+
+{% block head%}
+<script type="text/javascript">
+    $(document).ready(function() {
+        //active table
+        $("#mp1").addClass('active');
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="jumbotron2">
+  <div class="container">
+    <div class="text-center">
+      <img src="{% static 'img/sipia7.png'%}" class="img-responsive center-block " alt="sipia">
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
+        <p class="text-center"> El sistema de información de Predios de Importancia Ambiental es una herramiental que
+            facilita la administracion de los predios de importancia hidrica para los acueductos municipales, en el marco de
+            competencias de la Ley 99 de 1993.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="jumbotron3">
+  <h1 class="text-center"> Módulos del Sistema </h1>
+  <div class="text-center">
+    <div class="row">
+
+      <div class="col-xs-12 col-md-2 col-md-offset-3">.
+        <img src="{% static 'img/a.jpg'%}" alt="..." class="img-circle" height="140px" width="140px">
+        <p> Evaluacion </p>
+      </div>
+
+      <div class="col-xs-12 col-md-2">
+        <img src="{% static 'img/b.jpg'%}" alt="..." class="img-circle" height="140px" width="140px">
+        <p> Adquisición </p>
+      </div>
+
+      <div class="col-xs-12 col-md-2">
+        <img src="{% static 'img/c.jpg'%}" alt="..." class="img-circle" height="140px" width="140px">
+        <p> Mantenimiento </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
